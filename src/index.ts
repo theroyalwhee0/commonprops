@@ -95,7 +95,11 @@ export type GetUpcastable<T> =
  * ```
  */
 export type CommonStrictPairs<T, U> = {
-    [K in keyof T & keyof U]: T[K] extends U[K]
+    [K in keyof T & keyof U as T[K] extends U[K]
+        ? U[K] extends T[K]
+        ? K
+        : never
+        : never]: T[K] extends U[K]
     ? T[K]
     : U[K] extends T[K]
     ? U[K]
@@ -127,11 +131,26 @@ export type CommonStrictPairs<T, U> = {
  * ```
  */
 export type CommonUpcastPairs<T, U> = {
-    [K in keyof T & keyof U]:
+    [K in keyof T & keyof U as 
+        T[K] extends U[K]
+        ? U[K] extends T[K]
+        ? K  // Exact match
+        : K  // T is more specific than U, include
+        : U[K] extends T[K]
+        ? K  // U is more specific than T, include  
+        : IsUpcastable<T[K]> extends true
+        ? IsUpcastable<U[K]> extends true
+        ? GetUpcastable<T[K]> extends GetUpcastable<U[K]>
+        ? K
+        : never
+        : never
+        : never]:
     T[K] extends U[K]
-    ? T[K]
+    ? U[K] extends T[K]
+    ? T[K]  // Exact match, use either (they're the same)
+    : U[K]  // T is more specific, use the more general U
     : U[K] extends T[K]
-    ? U[K]
+    ? T[K]  // U is more specific, use the more general T
     : IsUpcastable<T[K]> extends true
     ? IsUpcastable<U[K]> extends true
     ? GetUpcastable<T[K]> extends GetUpcastable<U[K]>

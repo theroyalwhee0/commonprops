@@ -41,11 +41,9 @@ describe("CommonStrictPairs", () => {
     
     type Result = CommonStrictPairs<Cat, Dog>;
     const result: Result = {
-      name: "buddy",
-      // @ts-expect-error type becomes never due to 'cat' !== 'dog'  
-      type: "should fail",
-      // @ts-expect-error active becomes never due to true !== false
-      active: "should fail"
+      name: "buddy"
+      // type excluded due to 'cat' !== 'dog'
+      // active excluded due to true !== false
     };
     
     expect(result.name).to.equal("buddy");
