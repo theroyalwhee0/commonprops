@@ -1,11 +1,11 @@
 {
   "name": "@theroyalwhee0/commonprops",
   "version": "1.0.0",
-  "description": "",
+  "description": "TypeScript utilities for extracting common properties from sets of types.",
   "main": "src/index.ts",
   "keywords": [],
   "author": "Adam Mill <hismajesty@theroyalwhee.com> (https://www.theroyalwhee.com/)",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "type": "module",
   "private": true,
   "dependencies": {},
@@ -24,14 +24,13 @@
     "node_options": "--disable-warning=ExperimentalWarning --experimental-strip-types"
   },
   "scripts": {
-    "check": "echo '- \"check\" always exits with status 0'; npm run -s lint && npm run -s test:quiet; echo '- Done'; true",
     "lint": "npm run -s lint:ts && npm run -s lint:eslint",
     "lint:fix": "npm run -s lint:ts && npm run -s lint:eslint:fix",
     "lint:ts": "tsc --noEmit",
     "lint:eslint": "eslint 'src/**/*.ts' --max-warnings=20",
     "lint:eslint:fix": "eslint 'src/**/*.ts' --max-warnings=20 --fix",
-    "test": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-timeout=5000 'tests/**/*.test.ts'",
-    "test:quiet": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-reporter=dot --test-timeout=5000 'tests/**/*.test.ts'",
+    "test": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-timeout=3000 'tests/**/*.test.ts'",
+    "test:quiet": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-reporter=dot --test-timeout=3000 'tests/**/*.test.ts'",
     "docs": "typedoc"
   }
 }

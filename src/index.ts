@@ -18,7 +18,7 @@
  * ```
  * 
  * @author Adam Mill <hismajesty@theroyalwhee.com>
- * @license UNLICENSED
+ * @license Apache-2.0
  */
 
 /**
@@ -79,19 +79,23 @@ export type GetUpcastable<T> =
  * Finds common properties between two types using strict type matching.
  * 
  * Properties are included only if their types are exactly identical.
- * Literal types must match exactly - no upcasting is performed.
+ * Properties with incompatible types are completely excluded from the result
+ * (not included with `never` type). Uses key remapping to filter properties
+ * at the type level.
  * 
  * @template T First type
  * @template U Second type
- * @returns Object type with common properties having exact matching types
+ * @returns Object type with only properties that have exactly matching types
  * 
  * @example
  * ```typescript
- * interface A { name: string; type: 'cat'; }
- * interface B { name: string; type: 'dog'; }
+ * interface A { name: string; type: 'cat'; active: true; }
+ * interface B { name: string; type: 'dog'; active: false; }
  * 
  * type Result = CommonStrictPairs<A, B>; // { name: string }
- * // 'type' is excluded because 'cat' !== 'dog'
+ * // 'type' excluded: 'cat' !== 'dog'
+ * // 'active' excluded: true !== false
+ * // Only properties with identical types are included
  * ```
  */
 export type CommonStrictPairs<T, U> = {
@@ -111,13 +115,16 @@ export type CommonStrictPairs<T, U> = {
  * 
  * Properties are included if:
  * 1. Types are exactly identical, or
- * 2. Both are primitive literals that can be upcast to the same base type
+ * 2. One type is more general than the other (e.g., `string` vs `'literal'`), or
+ * 3. Both are primitive literals that can be upcast to the same base type
  * 
- * When upcasting occurs, the result is the primitive base type.
+ * **Type Selection Priority**: When types can be unified, the more general type
+ * is chosen to ensure maximum compatibility (e.g., `string` over `'cat'`).
+ * This maintains upcasting behavior in recursive scenarios.
  * 
  * @template T First type
  * @template U Second type
- * @returns Object type with common properties, upcasting literals when possible
+ * @returns Object type with common properties, preferring general types when possible
  * 
  * @example
  * ```typescript
@@ -126,8 +133,12 @@ export type CommonStrictPairs<T, U> = {
  * 
  * type Result = CommonUpcastPairs<A, B>;
  * // { name: string; type: string; active: boolean }
- * // 'type': 'cat' | 'dog' → string
- * // 'active': true | false → boolean
+ * // 'type': 'cat' | 'dog' → string (upcast to common base)
+ * // 'active': true | false → boolean (upcast to common base)
+ * 
+ * // Type priority example:
+ * type Mixed = CommonUpcastPairs<{prop: string}, {prop: 'literal'}>;
+ * // Result: {prop: string} - chooses more general type
  * ```
  */
 export type CommonUpcastPairs<T, U> = {
