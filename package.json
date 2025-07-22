@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "TypeScript utilities for extracting common properties from sets of types.",
   "main": "src/index.ts",
-  "keywords": [],
+  "keywords": [
+    "upcast",
+    "utility-types",
+    "common-properties"
+  ],
   "author": "Adam Mill <hismajesty@theroyalwhee.com> (https://www.theroyalwhee.com/)",
   "license": "Apache-2.0",
   "type": "module",
