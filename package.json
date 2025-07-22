@@ -31,6 +31,7 @@
     "lint:eslint": "eslint 'src/**/*.ts' --max-warnings=20",
     "lint:eslint:fix": "eslint 'src/**/*.ts' --max-warnings=20 --fix",
     "test": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-timeout=5000 'tests/**/*.test.ts'",
-    "test:quiet": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-reporter=dot --test-timeout=5000 'tests/**/*.test.ts'"
+    "test:quiet": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-reporter=dot --test-timeout=5000 'tests/**/*.test.ts'",
+    "docs": "typedoc"
   }
 }
