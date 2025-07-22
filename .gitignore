@@ -1,0 +1,39 @@
+# Development files.
+.local/
+
+# Backups and Temporary files.
+*.tmp
+*.bak
+
+# IDE files.
+.idea/
+.vscode/
+*.code-workspace
+
+# Secrets.
+.ssh/
+*.kdbx
+
+# AI configuration.
+.claude/
+.github/copilot-instructions.md
+
+# Node ecosystem.
+node_modules/
+
+# Rust ecosystem.
+/target
+
+# Environment files.
+.env
+
+# Large artifacts.
+*.zip
+*.tar
+*.gz
+*.bz2
+*.br
+*.7z
+*.rar
+*.iso
+*.dmg
