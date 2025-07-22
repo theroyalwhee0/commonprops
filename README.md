@@ -24,6 +24,8 @@ type UpcastCommon = CommonUpcastProps<[Cat, Dog]>; // { name: string; type: stri
 
 ## API
 
+[API documentation](https://theroyalwhee0.github.io/commonprops/)
+
 ### Main Types
 
 - `CommonStrictProps<T[]>` - Find common properties with strict type matching
