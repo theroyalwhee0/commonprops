@@ -80,34 +80,6 @@ type Result = CommonUpcastProps<[Cat, Dog, Bird]>;
 // Equivalent to: CommonUpcastPairs<CommonUpcastPairs<Cat, Dog>, Bird>
 ```
 
-## Implementation Details
-
-### Key Remapping for Property Exclusion
-
-The types use TypeScript's mapped type key remapping feature (`as` clause) to exclude properties with incompatible types:
-
-```typescript
-type Example<T, U> = {
-    [K in keyof T & keyof U as 
-        T[K] extends U[K] ? K : never  // Only include key if types match
-    ]: T[K]
-}
-```
-
-This approach ensures properties are completely absent from the result type rather than being present with `never` type, providing better type safety and developer experience.
-
-### Non-Distributive Conditional Types
-
-The `IsUpcastable` type uses non-distributive conditional types with bracket notation to handle union types correctly:
-
-```typescript
-[T] extends [boolean] // Non-distributive - treats T as single unit
-// vs
-T extends boolean     // Distributive - splits union types
-```
-
-This prevents `boolean` (which is `true | false`) from being incorrectly identified as upcastable.
-
 ## License & Copyright
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE.txt](LICENSE.txt) file for details.
