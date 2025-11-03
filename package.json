@@ -12,6 +12,10 @@
   "license": "Apache-2.0",
   "type": "module",
   "private": true,
+  "packageManager": "npm@11.4.1",
+  "engines": {
+    "node": ">=22"
+  },
   "devDependencies": {
     "@types/chai": "^5.2.2",
     "@types/node": "^22.0.0",
@@ -24,9 +28,6 @@
     "typedoc": "^0.28.7",
     "typescript": "^5.8.3"
   },
-  "config": {
-    "node_options": "--disable-warning=ExperimentalWarning --experimental-strip-types"
-  },
   "scripts": {
     "lint": "npm run -s lint:ts && npm run -s lint:eslint && npm run -s lint:md",
     "lint:fix": "npm run -s lint:ts && npm run -s lint:eslint:fix && npm run -s lint:md:fix",
@@ -35,8 +36,8 @@
     "lint:eslint:fix": "eslint 'src/**/*.ts' --max-warnings=20 --fix",
     "lint:md": "markdownlint $(git ls-files '*.md')",
     "lint:md:fix": "markdownlint --fix $(git ls-files '*.md')",
-    "test": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-timeout=3000 'tests/**/*.test.ts'",
-    "test:quiet": "NODE_OPTIONS=\"$npm_package_config_node_options\" node --test --test-reporter=dot --test-timeout=3000 'tests/**/*.test.ts'",
+    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test --test-timeout=3000 'tests/**/*.test.ts'",
+    "test:quiet": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test --test-reporter=dot --test-timeout=3000 'tests/**/*.test.ts'",
     "docs": "typedoc"
   }
 }
