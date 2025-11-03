@@ -41,28 +41,21 @@ jobs:
       - name: Generate documentation
         run: npm run docs
 
-      - name: Checkout gh-pages branch
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          path: gh-pages
-
       - name: Organize versioned docs
         run: |
-          # Create gh-pages directory if it doesn't exist
-          mkdir -p gh-pages
+          # Create deployment structure
+          mkdir -p deploy
 
           # Copy current docs to versioned directory
-          mkdir -p "gh-pages/v${{ steps.version.outputs.version }}"
-          cp -r docs/* "gh-pages/v${{ steps.version.outputs.version }}/"
+          mkdir -p "deploy/v${{ steps.version.outputs.version }}"
+          cp -r docs/* "deploy/v${{ steps.version.outputs.version }}/"
 
-          # Update or create latest symlink/copy
-          rm -rf gh-pages/latest
-          cp -r docs/* gh-pages/latest 2>/dev/null || mkdir -p gh-pages/latest
-          cp -r docs/* gh-pages/latest/
+          # Copy to latest directory
+          mkdir -p deploy/latest
+          cp -r docs/* deploy/latest/
 
-          # Create index page listing all versions
-          cat > gh-pages/index.html << 'EOF'
+          # Create index page that redirects to latest
+          cat > deploy/index.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
@@ -81,7 +74,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './gh-pages'
+          path: './deploy'
 
       - name: Deploy to GitHub Pages
         id: deployment
