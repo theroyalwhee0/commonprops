@@ -7,12 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-
-### Changed
-
-### Fixed
-
 ## [0.1.0] - 2025-11-03
 
 ### Added
@@ -31,9 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Vite build system for faster builds and better DX
 - Community documentation (CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md)
 - CHANGELOG.md to track project changes
-- Markdown linting configuration
-- GitHub Actions workflows for CI, npm publishing, and documentation deployment
-- Optimized package files configuration for smaller published package size
 
 [Unreleased]: https://github.com/theroyalwhee0/commonprops/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/theroyalwhee0/commonprops/releases/tag/v0.1.0
