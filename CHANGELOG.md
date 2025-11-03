@@ -27,18 +27,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `CommonUpcastPairs<T, U>` - Two-type upcast comparison
 - Comprehensive TypeScript documentation with examples
 - TypeDoc configuration for API documentation generation
-- Test suite with comprehensive coverage
+- Test suite with Vitest and comprehensive coverage
+- Vite build system for faster builds and better DX
 - Community documentation (CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md)
 - CHANGELOG.md to track project changes
 - Markdown linting configuration
 - GitHub Actions workflows for CI, npm publishing, and documentation deployment
 - Optimized package files configuration for smaller published package size
-
-### Changed
-
-- Simplified README.md by removing internal implementation details
-- Migrated from Node.js native test runner to Vite + Vitest
-- Updated build system to use Vite for faster builds and better DX
 
 [Unreleased]: https://github.com/theroyalwhee0/commonprops/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/theroyalwhee0/commonprops/releases/tag/v0.1.0
