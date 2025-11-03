@@ -6,13 +6,13 @@
 
 # Configuration.
 !.markdownlintrc
-!.npmrc
 !tsconfig.json
 !typedoc.json
 !eslint.config.js
 !vite.config.ts
 
 # Documentation.
+!CLAUDE.md
 !README.md
 !/SECURITY.md
 !/CHANGELOG.md
@@ -37,15 +37,6 @@
 !dist/**/*.js
 !dist/**/*.js.map
 !dist/**/*.d.ts
-
-# Generated docs.
-!docs/**/*.md
-!docs/**/*.html
-!docs/**/*.css
-!docs/**/*.js
-!docs/**/*.svg
-!docs/**/*.txt
-!docs/.nojekyll
 
 # Disallow completely.
 /node_modules
