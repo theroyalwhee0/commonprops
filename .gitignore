@@ -6,6 +6,7 @@
 
 # Configuration.
 !.markdownlintrc
+!.npmrc
 !tsconfig.json
 !typedoc.json
 !eslint.config.js
