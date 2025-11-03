@@ -12,6 +12,7 @@
 !vite.config.ts
 
 # Documentation.
+!CLAUDE.md
 !README.md
 !/SECURITY.md
 !/CHANGELOG.md
