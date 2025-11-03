@@ -35,10 +35,22 @@ jobs:
         id: version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
-      - name: Generate documentation
+      - name: Generate release documentation
         run: npm run docs
 
-      - name: Organize versioned docs
+      - name: Checkout main branch for unreleased docs
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-branch
+
+      - name: Generate unreleased documentation
+        working-directory: main-branch
+        run: |
+          npm ci
+          npm run docs
+
+      - name: Organize all documentation
         run: |
           # Create deployment structure
           mkdir -p deploy
@@ -50,6 +62,10 @@ jobs:
           # Copy to latest directory (including hidden files)
           mkdir -p deploy/latest
           cp -r docs/. deploy/latest/
+
+          # Copy unreleased docs from main branch (including hidden files)
+          mkdir -p deploy/unreleased
+          cp -r main-branch/docs/. deploy/unreleased/
 
           # Create index page that redirects to latest
           cat > deploy/index.html << 'EOF'
