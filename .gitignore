@@ -1,0 +1,24 @@
+# Whitelist approach for gh-pages branch
+# Ignore everything by default
+*
+
+# Allow documentation directories
+!v*/
+!v*/**
+!latest/
+!latest/**
+!unreleased/
+!unreleased/**
+
+# Allow documentation files
+!*.html
+!*.js
+!*.css
+!*.svg
+
+# Allow .nojekyll
+!.nojekyll
+
+# Allow git files
+!.gitignore
+!.gitattributes
