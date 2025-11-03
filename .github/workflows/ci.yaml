@@ -50,3 +50,6 @@ jobs:
 
       - name: Generate docs
         run: npm run docs
+
+      - name: Clean node_modules cache
+        run: npm prune
