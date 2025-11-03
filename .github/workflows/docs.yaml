@@ -1,12 +1,14 @@
-name: Deploy Release Documentation
+name: Deploy Documentation
 
 on:
   release:
     types: [ published ]
+  push:
+    branches: [ main ]
   workflow_dispatch:  # Allow manual triggering
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -20,55 +22,68 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout current ref
         uses: actions/checkout@v4
+        with:
+          path: current
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: 'package.json'
+          node-version-file: 'current/package.json'
 
       - name: Install dependencies
+        working-directory: current
         run: npm ci
 
       - name: Get version from package.json
         id: version
+        working-directory: current
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
-      - name: Generate release documentation
+      - name: Determine trigger type
+        id: trigger
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "is_release=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_release=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate documentation
+        working-directory: current
         run: npm run docs
 
-      - name: Checkout main branch for unreleased docs
+      - name: Checkout gh-pages branch
         uses: actions/checkout@v4
         with:
-          ref: main
-          path: main-branch
+          ref: gh-pages
+          path: gh-pages
 
-      - name: Generate unreleased documentation
-        working-directory: main-branch
+      - name: Update documentation on gh-pages
         run: |
-          npm ci
-          npm run docs
+          # Always update unreleased/
+          rm -rf gh-pages/unreleased
+          cp -r current/docs gh-pages/unreleased
 
-      - name: Organize all documentation
-        run: |
-          # Create deployment structure
-          mkdir -p deploy
+          if [ "${{ steps.trigger.outputs.is_release }}" = "true" ]; then
+            # Release: Create versioned directory and update latest
+            VERSION="${{ steps.version.outputs.version }}"
 
-          # Copy current docs to versioned directory (including hidden files)
-          mkdir -p "deploy/v${{ steps.version.outputs.version }}"
-          cp -r docs/. "deploy/v${{ steps.version.outputs.version }}/"
+            # Copy to versioned directory
+            rm -rf "gh-pages/v${VERSION}"
+            cp -r current/docs "gh-pages/v${VERSION}"
 
-          # Copy to latest directory (including hidden files)
-          mkdir -p deploy/latest
-          cp -r docs/. deploy/latest/
+            # Find actual latest version using semver comparison
+            cd gh-pages
+            LATEST_VERSION=$(find . -maxdepth 1 -type d -name 'v*' | sed 's/\.\/v//' | sort -V | tail -n 1)
 
-          # Copy unreleased docs from main branch (including hidden files)
-          mkdir -p deploy/unreleased
-          cp -r main-branch/docs/. deploy/unreleased/
+            # Update latest/ to point to the actual latest version
+            rm -rf latest
+            cp -r "v${LATEST_VERSION}" latest
 
-          # Create index page that redirects to latest
-          cat > deploy/index.html << 'EOF'
+            # Update index.html to redirect to latest
+            cat > index.html << 'EOF'
           <!DOCTYPE html>
           <html>
           <head>
@@ -80,6 +95,38 @@ jobs:
           </body>
           </html>
           EOF
+          else
+            # Regular commit: Only unreleased/ was updated
+            # Update index.html to redirect to unreleased
+            cd gh-pages
+            cat > index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+            <title>CommonProps Documentation</title>
+            <meta http-equiv="refresh" content="0; url=./unreleased/">
+          </head>
+          <body>
+            <p>Redirecting to <a href="./unreleased/">unreleased documentation</a>...</p>
+          </body>
+          </html>
+          EOF
+          fi
+
+      - name: Commit and push to gh-pages
+        working-directory: gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+
+          if [ "${{ steps.trigger.outputs.is_release }}" = "true" ]; then
+            git commit -m "docs: Update documentation for v${{ steps.version.outputs.version }}"
+          else
+            git commit -m "docs: Update unreleased documentation"
+          fi
+
+          git push
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -87,7 +134,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './deploy'
+          path: './gh-pages'
 
       - name: Deploy to GitHub Pages
         id: deployment
