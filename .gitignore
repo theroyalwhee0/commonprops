@@ -9,6 +9,7 @@
 !tsconfig.json
 !typedoc.json
 !eslint.config.js
+!vite.config.ts
 
 # Documentation.
 !README.md
@@ -30,6 +31,11 @@
 # TypeScript source.
 !src/**/*.ts
 !tests/**/*.test.ts
+
+# Generated dist.
+!dist/**/*.js
+!dist/**/*.js.map
+!dist/**/*.d.ts
 
 # Generated docs.
 !docs/**/*.md

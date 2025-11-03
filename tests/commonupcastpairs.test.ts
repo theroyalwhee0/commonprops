@@ -1,4 +1,4 @@
-import { test, describe } from "node:test";
+import { test, describe } from "vitest";
 import { expect } from "chai";
 import type { CommonUpcastPairs } from "../src/index.ts";
 
@@ -30,13 +30,13 @@ describe("CommonUpcastPairs", () => {
   test("should upcast string literals to string", () => {
     interface Cat { 
       name: string; 
-      type: 'cat'; 
-      sound: 'meow';
+      type: "cat"; 
+      sound: "meow";
     }
     interface Dog { 
       name: string; 
-      type: 'dog'; 
-      sound: 'bark';
+      type: "dog"; 
+      sound: "bark";
     }
     
     type Result = CommonUpcastPairs<Cat, Dog>;
@@ -104,13 +104,13 @@ describe("CommonUpcastPairs", () => {
       name: string;
       count: 10;
       active: true;
-      mode: 'dev';
+      mode: "dev";
     }
     interface ConfigB { 
       name: string;
       count: 20;
       active: false;
-      mode: 'prod';
+      mode: "prod";
     }
     
     type Result = CommonUpcastPairs<ConfigA, ConfigB>;
@@ -130,12 +130,12 @@ describe("CommonUpcastPairs", () => {
   test("should exclude non-upcastable mismatched types", () => {
     interface TypeA { 
       name: string;
-      data: { type: 'object' };
+      data: { type: "object" };
       list: string[];
     }
     interface TypeB { 
       name: string;
-      data: { type: 'different' };
+      data: { type: "different" };
       list: number[];
     }
     
@@ -152,12 +152,12 @@ describe("CommonUpcastPairs", () => {
   test("should handle primitive base types with literals", () => {
     interface TypeA { 
       name: string;        // primitive
-      status: 'active';    // literal
+      status: "active";    // literal
       count: number;       // primitive
     }
     interface TypeB { 
       name: string;        // primitive
-      status: 'inactive';  // literal
+      status: "inactive";  // literal
       count: 5;            // literal
     }
     

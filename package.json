@@ -2,7 +2,8 @@
   "name": "@theroyalwhee0/commonprops",
   "version": "0.1.0",
   "description": "TypeScript utilities for extracting common properties from sets of types.",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "upcast",
     "utility-types",
@@ -26,18 +27,25 @@
     "eslint-plugin-import": "^2.32.0",
     "markdownlint-cli": "^0.45.0",
     "typedoc": "^0.28.7",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.5.4",
+    "vitest": "^3.2.4"
   },
   "scripts": {
-    "lint": "npm run -s lint:ts && npm run -s lint:eslint && npm run -s lint:md",
-    "lint:fix": "npm run -s lint:ts && npm run -s lint:eslint:fix && npm run -s lint:md:fix",
+    "build": "vite build",
+    "clean": "rm -rf dist",
+    "lint": "npm run -s lint:ts && npm run -s lint:eslint && npm run -s lint:md && npm run -s lint:docs",
+    "lint:fix": "npm run -s lint:eslint:fix && npm run -s lint:md:fix",
     "lint:ts": "tsc --noEmit",
-    "lint:eslint": "eslint 'src/**/*.ts' --max-warnings=20",
-    "lint:eslint:fix": "eslint 'src/**/*.ts' --max-warnings=20 --fix",
+    "lint:eslint": "eslint .",
+    "lint:eslint:fix": "eslint . --fix",
     "lint:md": "markdownlint $(git ls-files '*.md')",
     "lint:md:fix": "markdownlint --fix $(git ls-files '*.md')",
-    "test": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test --test-timeout=3000 'tests/**/*.test.ts'",
-    "test:quiet": "node --disable-warning=ExperimentalWarning --experimental-strip-types --test --test-reporter=dot --test-timeout=3000 'tests/**/*.test.ts'",
-    "docs": "typedoc"
+    "lint:docs": "typedoc --validation --treatWarningsAsErrors --emit none",
+    "test": "vitest run",
+    "test:quiet": "vitest run --reporter=dot",
+    "docs": "typedoc",
+    "prepublishOnly": "npm run clean && npm run build"
   }
 }

@@ -1,11 +1,11 @@
-import { test, describe } from "node:test";
+import { test, describe } from "vitest";
 import { expect } from "chai";
 import type { CommonUpcastProps } from "../src/index.ts";
 
 describe("CommonUpcastProps", () => {
   test("should handle two types with upcast matching", () => {
-    interface Cat { name: string; type: 'cat'; active: true; }
-    interface Dog { name: string; type: 'dog'; active: false; }
+    interface Cat { name: string; type: "cat"; active: true; }
+    interface Dog { name: string; type: "dog"; active: false; }
     
     type Result = CommonUpcastProps<[Cat, Dog]>;
     const result: Result = {
@@ -20,9 +20,9 @@ describe("CommonUpcastProps", () => {
   });
 
   test("should handle three types with upcast matching", () => {
-    interface Cat { name: string; type: 'cat'; priority: 1; }
-    interface Dog { name: string; type: 'dog'; priority: 2; }
-    interface Bird { name: string; type: 'bird'; priority: 3; }
+    interface Cat { name: string; type: "cat"; priority: 1; }
+    interface Dog { name: string; type: "dog"; priority: 2; }
+    interface Bird { name: string; type: "bird"; priority: 3; }
     
     type Result = CommonUpcastProps<[Cat, Dog, Bird]>;
     const result: Result = {
@@ -37,10 +37,10 @@ describe("CommonUpcastProps", () => {
   });
 
   test("should handle four types with mixed literals", () => {
-    interface TypeA { id: string; flag: true; count: 10; mode: 'dev'; }
-    interface TypeB { id: string; flag: false; count: 20; mode: 'test'; }
-    interface TypeC { id: string; flag: true; count: 30; mode: 'prod'; }
-    interface TypeD { id: string; flag: false; count: 40; mode: 'staging'; }
+    interface TypeA { id: string; flag: true; count: 10; mode: "dev"; }
+    interface TypeB { id: string; flag: false; count: 20; mode: "test"; }
+    interface TypeC { id: string; flag: true; count: 30; mode: "prod"; }
+    interface TypeD { id: string; flag: false; count: 40; mode: "staging"; }
     
     type Result = CommonUpcastProps<[TypeA, TypeB, TypeC, TypeD]>;
     const result: Result = {
@@ -127,12 +127,12 @@ describe("CommonUpcastProps", () => {
   test("should exclude non-upcastable different types", () => {
     interface TypeA { 
       name: string;
-      data: { structure: 'A' };
+      data: { structure: "A" };
       items: string[];
     }
     interface TypeB { 
       name: string;
-      data: { structure: 'B' };
+      data: { structure: "B" };
       items: number[];
     }
     interface TypeC {
@@ -158,21 +158,21 @@ describe("CommonUpcastProps", () => {
       port: 5432; 
       ssl: true; 
       timeout: 30000;
-      database: 'users';
+      database: "users";
     }
     interface CacheConnection { 
       host: string; 
       port: 6379; 
       ssl: false; 
       timeout: 5000;
-      database: 'cache';
+      database: "cache";
     }
     interface ApiConnection { 
       host: string; 
       port: 3000; 
       ssl: true; 
       timeout: 10000;
-      database: 'api';
+      database: "api";
     }
     
     type Result = CommonUpcastProps<[DatabaseConnection, CacheConnection, ApiConnection]>;

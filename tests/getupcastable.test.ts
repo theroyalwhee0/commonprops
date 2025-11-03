@@ -1,4 +1,4 @@
-import { test, describe } from "node:test";
+import { test, describe } from "vitest";
 import { expect } from "chai";
 import type { GetUpcastable } from "../src/index.ts";
 
@@ -59,29 +59,31 @@ describe("GetUpcastable", () => {
     type ObjectType = GetUpcastable<{ a: 1 }>;
     // @ts-expect-error Cannot assign to never type
     const objectTest: ObjectType = "anything";
+    expect(objectTest).to.equal("anything");
 
     // Array type should return never.
     type ArrayType = GetUpcastable<string[]>;
     // @ts-expect-error Cannot assign to never type
     const arrayTest: ArrayType = [];
+    expect(arrayTest).to.deep.equal([]);
 
     // Function type should return never.
     type FunctionType = GetUpcastable<() => void>;
     // @ts-expect-error Cannot assign to never type
-    const functionTest: FunctionType = () => {};
+    const functionTest: FunctionType = (): void => { return; };
+    expect(typeof functionTest).to.equal("function");
 
     // null type should return never.
     type NullType = GetUpcastable<null>;
     // @ts-expect-error Cannot assign to never type
     const nullTest: NullType = null;
+    void expect(nullTest).to.be.null;
 
     // undefined type should return never.
     type UndefinedType = GetUpcastable<undefined>;
     // @ts-expect-error Cannot assign to never type
     const undefinedTest: UndefinedType = undefined;
-
-    // This test validates that TypeScript correctly prevents assignments to never
-    expect(true).to.be.true;
+    void expect(undefinedTest).to.be.undefined;
   });
 
   test("should handle union types", () => {

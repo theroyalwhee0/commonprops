@@ -3,9 +3,12 @@ import tseslint from "@typescript-eslint/eslint-plugin";
 import tsparser from "@typescript-eslint/parser";
 
 export default [
+  {
+    ignores: ["docs/**", "dist/**", "node_modules/**", ".local/**"]
+  },
   js.configs.recommended,
   {
-    files: ["src/**/*.ts"],
+    files: ["src/**/*.ts", "tests/**/*.ts"],
     ignores: ["src/.local/**"],
     languageOptions: {
       parser: tsparser,
@@ -88,6 +91,33 @@ export default [
       "no-throw-literal": "error",
       "radix": "error",
       "prefer-template": "error",
+    },
+  },
+  {
+    files: ["*.ts"],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+      },
+      globals: {
+        console: "readonly",
+        process: "readonly",
+      },
+    },
+    plugins: {
+      "@typescript-eslint": tseslint,
+    },
+    rules: {
+      "no-unused-vars": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", {
+        varsIgnorePattern: "^_",
+        argsIgnorePattern: "^_"
+      }],
+      "quotes": ["warn", "double", { "allowTemplateLiterals": true }],
+      "no-console": "warn",
+      "prefer-const": "warn",
     },
   },
   {
