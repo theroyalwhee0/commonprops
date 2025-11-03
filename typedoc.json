@@ -12,7 +12,7 @@
     "**/*.test.ts",
     "**/test/**/*",
     "**/.local/**/*",
-    "**/node_modules/**/*",
+    "**/node_modules/**/*"
   ],
   "excludeExternals": true,
   "excludePrivate": false,
