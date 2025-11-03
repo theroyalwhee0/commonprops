@@ -11,6 +11,10 @@
   ],
   "author": "Adam Mill <hismajesty@theroyalwhee.com> (https://www.theroyalwhee.com/)",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theroyalwhee0/commonprops"
+  },
   "type": "module",
   "packageManager": "npm@11.4.1",
   "engines": {
