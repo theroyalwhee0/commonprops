@@ -36,9 +36,9 @@ jobs:
 
       - name: Organize unreleased docs
         run: |
-          # Create deployment structure
+          # Create deployment structure (including hidden files like .nojekyll)
           mkdir -p deploy/unreleased
-          cp -r docs/* deploy/unreleased/
+          cp -r docs/. deploy/unreleased/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
