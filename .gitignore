@@ -1,39 +1,46 @@
-# Development files.
-.local/
+# Ignore all files, but allow all directories.
+*
+!.gitignore
+!*/
+!*/**/
 
-# Backups and Temporary files.
-*.tmp
-*.bak
+# Configuration.
+!.markdownlintrc
+!tsconfig.json
+!typedoc.json
+!eslint.config.js
 
-# IDE files.
-.idea/
-.vscode/
-*.code-workspace
+# Documentation.
+!README.md
+!/SECURITY.md
+!/CHANGELOG.md
+!/LICENSE.txt
+!/CODE_OF_CONDUCT.md
+!/CONTRIBUTING.md
 
-# Secrets.
-.ssh/
-*.kdbx
-
-# AI configuration.
-.claude/
-.github/copilot-instructions.md
+# GitHub.
+!.github/ISSUE_TEMPLATE/**/*.md
+!.github/workflows/**/*.yaml
+!.github/scripts/**/*.sh
 
 # Node ecosystem.
-node_modules/
+!package.json
+!package-lock.json
 
-# Rust ecosystem.
-/target
+# TypeScript source.
+!src/**/*.ts
+!tests/**/*.test.ts
 
-# Environment files.
-.env
+# Generated docs.
+!docs/**/*.md
+!docs/**/*.html
+!docs/**/*.css
+!docs/**/*.js
+!docs/**/*.svg
+!docs/**/*.txt
+!docs/.nojekyll
 
-# Large artifacts.
-*.zip
-*.tar
-*.gz
-*.bz2
-*.br
-*.7z
-*.rar
-*.iso
-*.dmg
+# Disallow completely.
+/node_modules
+/.focus
+.local/

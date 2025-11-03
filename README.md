@@ -80,6 +80,10 @@ type Result = CommonUpcastProps<[Cat, Dog, Bird]>;
 // Equivalent to: CommonUpcastPairs<CommonUpcastPairs<Cat, Dog>, Bird>
 ```
 
+## Development Notes
+
+- This project uses a whitelist approach to `.gitignore`
+
 ## License & Copyright
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE.txt](LICENSE.txt) file for details.
