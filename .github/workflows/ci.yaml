@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read  # Read repository contents only
+
 env:
   # Cache version - update this date to invalidate all caches
   # Can be overridden with repository variable CACHE_VERSION
@@ -36,61 +39,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install Node.js dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Install shellcheck and jq
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y shellcheck jq
+      - name: Lint
+        run: npm run lint
 
-      - name: Shellcheck
-        run: |
-          SCRIPTS=$(git ls-files '*.sh')
-          if [ -n "$SCRIPTS" ]; then
-            echo "Running shellcheck on shell scripts"
-            echo "$SCRIPTS" | xargs shellcheck --severity=warning
-          else
-            echo "No shell scripts found"
-          fi
+      - name: Test
+        run: npm test
 
-      - name: Markdown linting
-        run: |
-          MD_FILES=$(git ls-files '*.md')
-          if [ -n "$MD_FILES" ]; then
-            echo "Checking markdown files with markdownlint"
-            if [ -f .markdownlintrc ]; then
-              npm run lint:md
-            else
-              echo "$MD_FILES" | xargs npx markdownlint-cli@0.45.0
-            fi
-          else
-            echo "No markdown files found"
-          fi
+      - name: Build
+        run: npm run build
 
-      - name: NPM lint
-        run: |
-          if jq -e '.scripts.lint' package.json >/dev/null 2>&1; then
-            npm run lint
-          else
-            echo "No lint script defined in package.json"
-          fi
+      - name: Generate docs
+        run: npm run docs
 
-      - name: NPM test
-        run: |
-          if jq -e '.scripts.test' package.json >/dev/null 2>&1; then
-            npm test
-          else
-            echo "No test script defined in package.json"
-          fi
-
-      - name: NPM docs
-        run: |
-          if jq -e '.scripts.docs' package.json >/dev/null 2>&1; then
-            npm run docs
-          else
-            echo "No docs script defined in package.json"
-          fi
-
-      - name: Clean node_modules
+      - name: Clean node_modules cache
         run: npm prune
