@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [ main ]
 
+permissions:
+  contents: read  # Read repository contents only
+
 env:
   # Cache version - update this date to invalidate all caches
   # Can be overridden with repository variable CACHE_VERSION
