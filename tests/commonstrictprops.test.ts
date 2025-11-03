@@ -1,11 +1,11 @@
-import { test, describe } from "node:test";
+import { test, describe } from "vitest";
 import { expect } from "chai";
 import type { CommonStrictProps } from "../src/index.ts";
 
 describe("CommonStrictProps", () => {
   test("should handle two types with strict matching", () => {
-    interface Cat { name: string; type: 'cat'; }
-    interface Dog { name: string; type: 'dog'; }
+    interface Cat { name: string; type: "cat"; }
+    interface Dog { name: string; type: "dog"; }
     
     type Result = CommonStrictProps<[Cat, Dog]>;
     const result: Result = {
@@ -17,9 +17,9 @@ describe("CommonStrictProps", () => {
   });
 
   test("should handle three types with strict matching", () => {
-    interface Cat { name: string; type: 'cat'; legs: 4; }
-    interface Dog { name: string; type: 'dog'; legs: 4; }
-    interface Bird { name: string; type: 'bird'; legs: 2; }
+    interface Cat { name: string; type: "cat"; legs: 4; }
+    interface Dog { name: string; type: "dog"; legs: 4; }
+    interface Bird { name: string; type: "bird"; legs: 2; }
     
     type Result = CommonStrictProps<[Cat, Dog, Bird]>;
     const result: Result = {
@@ -87,20 +87,20 @@ describe("CommonStrictProps", () => {
   test("should use custom empty type for empty array", () => {
     type Result = CommonStrictProps<[], null>;
     const result: Result = null;
-    
-    expect(result).to.be.null;
+
+    void expect(result).to.be.null;
   });
 
   test("should handle complex nested structures", () => {
     interface ServiceA { 
       name: string; 
       config: { port: 3000; ssl: true };
-      metadata: { version: '1.0' };
+      metadata: { version: "1.0" };
     }
     interface ServiceB { 
       name: string; 
       config: { port: 8080; ssl: true };
-      metadata: { version: '2.0' };
+      metadata: { version: "2.0" };
     }
     interface ServiceC { 
       name: string; 

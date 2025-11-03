@@ -1,4 +1,4 @@
-import { test, describe } from "node:test";
+import { test, describe } from "vitest";
 import { expect } from "chai";
 import type { CommonStrictPairs } from "../src/index.ts";
 
@@ -30,12 +30,12 @@ describe("CommonStrictPairs", () => {
   test("should exclude properties with different literal types", () => {
     interface Cat { 
       name: string; 
-      type: 'cat'; 
+      type: "cat"; 
       active: true;
     }
     interface Dog { 
       name: string; 
-      type: 'dog'; 
+      type: "dog"; 
       active: false;
     }
     
@@ -74,12 +74,12 @@ describe("CommonStrictPairs", () => {
     interface ConfigA { 
       version: 1; 
       enabled: true;
-      mode: 'strict';
+      mode: "strict";
     }
     interface ConfigB { 
       version: 1; 
       enabled: true;
-      theme: 'dark';
+      theme: "dark";
     }
     
     type Result = CommonStrictPairs<ConfigA, ConfigB>;
@@ -96,12 +96,12 @@ describe("CommonStrictPairs", () => {
   test("should handle complex nested types", () => {
     interface ComplexA { 
       user: { name: string; id: number };
-      settings: { theme: 'light' };
+      settings: { theme: "light" };
       tags: string[];
     }
     interface ComplexB { 
       user: { name: string; id: number };
-      settings: { theme: 'dark' };
+      settings: { theme: "dark" };
       metadata: object;
     }
     
