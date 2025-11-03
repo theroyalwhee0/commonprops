@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.1] - 2025-11-03
+## [0.1.2] - 2025-11-03
 
 ### Added
 
@@ -26,9 +26,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Community documentation (CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md)
 - CHANGELOG.md to track project changes
 
+### Fixed
+
+- Add repository field to package.json for npm provenance verification
+
+## [0.1.1] - 2025-11-03 [YANKED]
+
+- Unreleased.
+
 ## [0.1.0] - 2025-11-03 [YANKED]
 
 - Unreleased.
 
-[Unreleased]: https://github.com/theroyalwhee0/commonprops/compare/v0.1.1...HEAD
-[0.1.1]: https://github.com/theroyalwhee0/commonprops/releases/tag/v0.1.1
+[Unreleased]: https://github.com/theroyalwhee0/commonprops/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/theroyalwhee0/commonprops/releases/tag/v0.1.2
