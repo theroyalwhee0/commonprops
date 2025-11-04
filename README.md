@@ -1,5 +1,9 @@
 # CommonProps
 
+[![npm version](https://img.shields.io/npm/v/@theroyalwhee0/commonprops.svg)](https://www.npmjs.com/package/@theroyalwhee0/commonprops)
+[![npm downloads](https://img.shields.io/npm/dm/@theroyalwhee0/commonprops.svg)](https://www.npmjs.com/package/@theroyalwhee0/commonprops)
+[![License](https://img.shields.io/npm/l/@theroyalwhee0/commonprops.svg)](https://github.com/theroyalwhee0/commonprops/blob/main/LICENSE.txt)
+
 TypeScript utility types for extracting common properties from multiple types.
 
 ## Overview
@@ -8,6 +12,12 @@ This module provides two main approaches to finding common properties:
 
 - **Strict mode**: Properties must have exactly matching types
 - **Upcast mode**: Primitive literals can be upcast to their base types (e.g., 'hello' → string)
+
+## Installation
+
+```bash
+npm install @theroyalwhee0/commonprops
+```
 
 ## Usage
 
@@ -79,6 +89,12 @@ Multi-type functions process types left-to-right, maintaining type generality:
 type Result = CommonUpcastProps<[Cat, Dog, Bird]>;
 // Equivalent to: CommonUpcastPairs<CommonUpcastPairs<Cat, Dog>, Bird>
 ```
+
+## Links
+
+- **npm**: <https://www.npmjs.com/package/@theroyalwhee0/commonprops>
+- **Repository**: <https://github.com/theroyalwhee0/commonprops>
+- **Documentation**: <https://theroyalwhee0.github.io/commonprops/latest/>
 
 ## Development Notes
 
