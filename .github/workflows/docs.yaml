@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: current
+          fetch-depth: 0  # Fetch all history and tags
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -41,13 +42,18 @@ jobs:
         working-directory: current
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_OUTPUT
 
-      - name: Determine trigger type
+      - name: Check for version tag
         id: trigger
+        working-directory: current
         run: |
-          if [ "${{ github.event_name }}" = "release" ]; then
+          # Check if current commit has a v* tag
+          TAGS=$(git tag --points-at HEAD | grep '^v')
+          if [ -n "$TAGS" ]; then
             echo "is_release=true" >> $GITHUB_OUTPUT
+            echo "Found version tag(s) on current commit: $TAGS"
           else
             echo "is_release=false" >> $GITHUB_OUTPUT
+            echo "No version tags found on current commit"
           fi
 
       - name: Generate documentation
@@ -82,35 +88,6 @@ jobs:
             rm -rf latest
             cp -r "v${LATEST_VERSION}" latest
 
-            # Update index.html to redirect to latest
-            cat > index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>CommonProps Documentation</title>
-            <meta http-equiv="refresh" content="0; url=./latest/">
-          </head>
-          <body>
-            <p>Redirecting to <a href="./latest/">latest documentation</a>...</p>
-          </body>
-          </html>
-          EOF
-          else
-            # Regular commit: Only unreleased/ was updated
-            # Update index.html to redirect to unreleased
-            cd gh-pages
-            cat > index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <title>CommonProps Documentation</title>
-            <meta http-equiv="refresh" content="0; url=./unreleased/">
-          </head>
-          <body>
-            <p>Redirecting to <a href="./unreleased/">unreleased documentation</a>...</p>
-          </body>
-          </html>
-          EOF
           fi
 
       - name: Commit and push to gh-pages
