@@ -58,7 +58,12 @@ jobs:
 
       - name: Generate documentation
         working-directory: current
-        run: npm run docs
+        run: |
+          if [ "${{ steps.trigger.outputs.is_release }}" = "true" ]; then
+            npx typedoc --name "CommonProps Documentation - v${{ steps.version.outputs.version }}" --includeVersion false
+          else
+            npx typedoc --name "CommonProps Documentation - Unreleased" --includeVersion false
+          fi
 
       - name: Checkout gh-pages branch
         uses: actions/checkout@v4
