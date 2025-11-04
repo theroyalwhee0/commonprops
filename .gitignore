@@ -22,3 +22,6 @@
 # Allow git files
 !.gitignore
 !.gitattributes
+
+# Allow README
+!README.md
