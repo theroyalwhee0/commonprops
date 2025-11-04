@@ -47,7 +47,7 @@ jobs:
         working-directory: current
         run: |
           # Check if current commit has a v* tag
-          TAGS=$(git tag --points-at HEAD | grep '^v')
+          TAGS=$(git tag --points-at HEAD | grep '^v' || true)
           if [ -n "$TAGS" ]; then
             echo "is_release=true" >> $GITHUB_OUTPUT
             echo "Found version tag(s) on current commit: $TAGS"
