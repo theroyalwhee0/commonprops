@@ -34,7 +34,10 @@ type UpcastCommon = CommonUpcastProps<[Cat, Dog]>; // { name: string; type: stri
 
 ## API
 
-[API documentation](https://theroyalwhee0.github.io/commonprops/latest/)
+Full API documentation is available at:
+
+- **[Latest Release](https://theroyalwhee0.github.io/commonprops/latest/)** - Documentation for the most recent stable release
+- **[Unreleased](https://theroyalwhee0.github.io/commonprops/unreleased/)** - Documentation for the current main branch (may include unreleased features)
 
 ### Main Types
 
